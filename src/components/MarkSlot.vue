@@ -1,19 +1,37 @@
 <template>
-	<button @click="this.mark = this.turnMark">
-		<fa-icon v-show="mark === 'x'" icon="fa-solid fa-x" size="xl" />
-		<fa-icon v-show="mark === 'o'" icon="fa-regular fa-circle" size="xl" />
+	<button @click="switchState" :style="{'background-color': bgColor}">
+		<fa-icon v-show="mark === 'x'" icon="fa-solid fa-x" />
+		<fa-icon v-show="mark === 'o'" icon="fa-regular fa-circle" />
 	</button>
 </template>
 
 <script>
+function switchState() {
+	this.mark = this.turnMark;
+	switch (this.mark) {
+		case "x": 
+			this.bgColor = "var(--clr-acc-x)";
+			break;
+		case "o": 
+			this.bgColor = "var(--clr-acc-o)";
+			break;
+		default: 
+			this.bgColor = "var(--clr-faded)";
+	}
+}
+
 export default {
 	name: "MarkSlot",
 	props: {
 		turnMark: String
 	},
+	methods: {
+		switchState
+	},
 	data() {
 		return {
-			mark: "None"
+			mark: "None",
+			bgColor: "var(--clr-faded)"
 		}
 	}
 }
@@ -21,9 +39,9 @@ export default {
 
 <style scoped>
 button {
-	background-color: var(--clr-faded);
-	width: 3em;
-	height: 3em;
+	font-size: 2rem;
+	width: 3rem;
+	height: 3rem;
 	padding: 0;
 }
 </style>
