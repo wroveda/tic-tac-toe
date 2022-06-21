@@ -8,15 +8,15 @@
 		<fa-icon icon="fa-regular fa-circle" sixe="xl" />
 	</div>
 	<div class="cont-slot">
-		<MarkSlot />
-		<MarkSlot />
-		<MarkSlot />
-		<MarkSlot />
-		<MarkSlot />
-		<MarkSlot />
-		<MarkSlot />
-		<MarkSlot />
-		<MarkSlot />
+		<MarkSlot :turnMark="turn"/>
+		<MarkSlot :turnMark="turn"/>
+		<MarkSlot :turnMark="turn"/>
+		<MarkSlot :turnMark="turn"/>
+		<MarkSlot :turnMark="turn"/>
+		<MarkSlot :turnMark="turn"/>
+		<MarkSlot :turnMark="turn"/>
+		<MarkSlot :turnMark="turn"/>
+		<MarkSlot :turnMark="turn"/>
 	</div>
 	<button id="btn-reset">Reset</button>
 </template>
@@ -29,6 +29,11 @@ export default {
 	name: "App",
 	components: {
 		MarkSlot
+	},
+	data() {
+		return {
+			turn: "o"
+		}
 	}
 }
 </script>

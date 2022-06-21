@@ -1,17 +1,25 @@
 <template>
-	<button>
-		<fa-icon v-show="false" icon="fa-regular fa-circle" size="xl" />
-		<fa-icon v-show="false" icon="fa-solid fa-x" size="xl" />
+	<button @click="this.mark = this.turnMark">
+		<fa-icon v-show="mark === 'x'" icon="fa-solid fa-x" size="xl" />
+		<fa-icon v-show="mark === 'o'" icon="fa-regular fa-circle" size="xl" />
 	</button>
 </template>
 
 <script>
 export default {
-	name: "MarkSlot"
+	name: "MarkSlot",
+	props: {
+		turnMark: String
+	},
+	data() {
+		return {
+			mark: "None"
+		}
+	}
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 button {
 	background-color: var(--clr-faded);
 	width: 3em;
