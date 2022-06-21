@@ -2,11 +2,7 @@
 	<header>
 		<h1>TIC TAC TOE</h1>
 	</header>
-	<div class="cont-turn">
-		<fa-icon icon="fa-solid fa-x" sixe="xl" />
-		<div class="cont-turn__text">TURN</div>
-		<fa-icon icon="fa-regular fa-circle" sixe="xl" />
-	</div>
+	<TurnIndicator :turnMark="turn"/>
 	<div class="cont-slot">
 		<MarkSlot :turnMark="turn"/>
 		<MarkSlot :turnMark="turn"/>
@@ -23,16 +19,18 @@
 
 
 <script>
-import MarkSlot from "./components/MarkSlot.vue"
+import MarkSlot from "./components/MarkSlot.vue";
+import TurnIndicator from "./components/TurnIndicator.vue";
 
 export default {
 	name: "App",
 	components: {
-		MarkSlot
+		MarkSlot,
+		TurnIndicator
 	},
 	data() {
 		return {
-			turn: "o"
+			turn: "x"
 		}
 	}
 }
@@ -100,17 +98,6 @@ button {
 	grid-template-rows: repeat(3, 1fr);
 	width: fit-content;
 	margin-bottom: 0.5em;
-}
-
-.cont-turn {
-	font-size: 1.5rem;
-	display: flex;
-	align-items: center;
-	margin-bottom: 0.5em;
-}
-
-.cont-turn__text {
-	margin: 0 1em;
 }
 
 #btn-reset {
