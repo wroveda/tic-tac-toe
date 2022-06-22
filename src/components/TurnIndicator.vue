@@ -1,8 +1,8 @@
 <template>
 	<div class="turn-ind">
-		<div class="mark-x" :class="{active: turnMark === 'x'}"><fa-icon icon="fa-solid fa-x" sixe="xl" /></div>
+		<div class="mark-x" :class="{active: turnMark === 'x'}"><fa-icon icon="fa-solid fa-x" /></div>
 		<div class="turn-ind__text">TURN</div>
-		<div class="mark-o" :class="{active: turnMark === 'o'}"><fa-icon icon="fa-regular fa-circle" sixe="xl" /></div>
+		<div class="mark-o" :class="{active: turnMark === 'o'}"><fa-icon icon="fa-regular fa-circle" /></div>
 	</div>
 </template>
 
@@ -29,6 +29,7 @@ export default {
 
 .mark-x,
 .mark-o {
+	font-size: 2rem;
 	color: var(--clr-faded);
 }
 

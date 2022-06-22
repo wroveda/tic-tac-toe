@@ -4,17 +4,17 @@
 	</header>
 	<TurnIndicator :turnMark="turn"/>
 	<div class="cont-slot">
-		<MarkSlot :turnMark="turn"/>
-		<MarkSlot :turnMark="turn"/>
-		<MarkSlot :turnMark="turn"/>
-		<MarkSlot :turnMark="turn"/>
-		<MarkSlot :turnMark="turn"/>
-		<MarkSlot :turnMark="turn"/>
-		<MarkSlot :turnMark="turn"/>
-		<MarkSlot :turnMark="turn"/>
-		<MarkSlot :turnMark="turn"/>
+		<MarkSlot @click="onMarkSlotClick(0)" :mark="board[0]"/>
+		<MarkSlot @click="onMarkSlotClick(1)" :mark="board[1]"/>
+		<MarkSlot @click="onMarkSlotClick(2)" :mark="board[2]"/>
+		<MarkSlot @click="onMarkSlotClick(3)" :mark="board[3]"/>
+		<MarkSlot @click="onMarkSlotClick(4)" :mark="board[4]"/>
+		<MarkSlot @click="onMarkSlotClick(5)" :mark="board[5]"/>
+		<MarkSlot @click="onMarkSlotClick(6)" :mark="board[6]"/>
+		<MarkSlot @click="onMarkSlotClick(7)" :mark="board[7]"/>
+		<MarkSlot @click="onMarkSlotClick(8)" :mark="board[8]"/>
 	</div>
-	<button id="btn-reset">Reset</button>
+	<button id="btn-reset" @click="resetBoard">Reset</button>
 </template>
 
 
@@ -22,15 +22,57 @@
 import MarkSlot from "./components/MarkSlot.vue";
 import TurnIndicator from "./components/TurnIndicator.vue";
 
+function resetBoard() {
+	this.board = ['', '', '', '', '', '', '', '', ''];
+	this.turn = 'x';
+}
+
+function onMarkSlotClick(id) {
+	if (this.board[id] != "") { return }
+	
+	this.board[id] = this.turn;
+	
+	// Win check for rows and columns
+	for (let i = 0; i < 3; i++) {
+		if (this.board[0 + i*3] === this.turn
+			&& this.board[1 + i*3] === this.turn
+			&& this.board[2 + i*3] === this.turn
+			||
+			this.board[0 + i] === this.turn
+			&& this.board[3 + i] === this.turn
+			&& this.board[6 + i] === this.turn) {
+				console.log("Win");
+			}
+	}
+	// Win check for diagonals
+	if (this.board[0] === this.turn
+		&& this.board[4] === this.turn
+		&& this.board[8] === this.turn
+		||
+		this.board[2] === this.turn
+		&& this.board[4] === this.turn
+		&& this.board[6] === this.turn
+		) {
+			console.log("Win");
+	}
+	
+	this.turn = this.turn === 'x' ? 'o' : 'x';
+}
+
 export default {
 	name: "App",
 	components: {
 		MarkSlot,
 		TurnIndicator
 	},
+	methods: {
+		resetBoard,
+		onMarkSlotClick
+	},
 	data() {
 		return {
-			turn: "x"
+			turn: 'x',
+			board: ['', '', '', '', '', '', '', '', '']
 		}
 	}
 }
