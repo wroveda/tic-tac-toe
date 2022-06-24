@@ -2,17 +2,18 @@
 	<header>
 		<h1>TIC TAC TOE</h1>
 	</header>
-	<TurnIndicator :turnMark="turn"/>
+	<TurnIndicator v-show="!isEnded" :turnNum="turn"/>
+	<WinIndicator v-show="isEnded" :turnNum="turn" :isTie="isTie"/>
 	<div class="cont-slot">
-		<MarkSlot @click="onMarkSlotClick(0)" :mark="board[0]"/>
-		<MarkSlot @click="onMarkSlotClick(1)" :mark="board[1]"/>
-		<MarkSlot @click="onMarkSlotClick(2)" :mark="board[2]"/>
-		<MarkSlot @click="onMarkSlotClick(3)" :mark="board[3]"/>
-		<MarkSlot @click="onMarkSlotClick(4)" :mark="board[4]"/>
-		<MarkSlot @click="onMarkSlotClick(5)" :mark="board[5]"/>
-		<MarkSlot @click="onMarkSlotClick(6)" :mark="board[6]"/>
-		<MarkSlot @click="onMarkSlotClick(7)" :mark="board[7]"/>
-		<MarkSlot @click="onMarkSlotClick(8)" :mark="board[8]"/>
+		<MarkSlot @click="onMarkSlotClick(0)" :turnNum="board[0]"/>
+		<MarkSlot @click="onMarkSlotClick(1)" :turnNum="board[1]"/>
+		<MarkSlot @click="onMarkSlotClick(2)" :turnNum="board[2]"/>
+		<MarkSlot @click="onMarkSlotClick(3)" :turnNum="board[3]"/>
+		<MarkSlot @click="onMarkSlotClick(4)" :turnNum="board[4]"/>
+		<MarkSlot @click="onMarkSlotClick(5)" :turnNum="board[5]"/>
+		<MarkSlot @click="onMarkSlotClick(6)" :turnNum="board[6]"/>
+		<MarkSlot @click="onMarkSlotClick(7)" :turnNum="board[7]"/>
+		<MarkSlot @click="onMarkSlotClick(8)" :turnNum="board[8]"/>
 	</div>
 	<button id="btn-reset" @click="resetBoard">Reset</button>
 </template>
@@ -21,49 +22,61 @@
 <script>
 import MarkSlot from "./components/MarkSlot.vue";
 import TurnIndicator from "./components/TurnIndicator.vue";
+import WinIndicator from "./components/WinIndicator.vue";
 
 function resetBoard() {
-	this.board = ['', '', '', '', '', '', '', '', ''];
-	this.turn = 'x';
+	this.board = [-1, -1, -1, -1, -1, -1, -1, -1, -1];
+	this.turn = 0;
+	this.isEnded = false;
+	this.isTie = false;
 }
 
 function onMarkSlotClick(id) {
-	if (this.board[id] != "") { return }
+	if (this.board[id] != '-1' || this.isEnded) { return }
 	
-	this.board[id] = this.turn;
+	let mark = this.turn % 2;
+	this.board[id] = mark;
 	
 	// Win check for rows and columns
 	for (let i = 0; i < 3; i++) {
-		if (this.board[0 + i*3] === this.turn
-			&& this.board[1 + i*3] === this.turn
-			&& this.board[2 + i*3] === this.turn
+		if (this.board[0 + i*3] === mark
+			&& this.board[1 + i*3] === mark
+			&& this.board[2 + i*3] === mark
 			||
-			this.board[0 + i] === this.turn
-			&& this.board[3 + i] === this.turn
-			&& this.board[6 + i] === this.turn) {
-				console.log("Win");
-			}
+			this.board[0 + i] === mark
+			&& this.board[3 + i] === mark
+			&& this.board[6 + i] === mark) {
+				this.isEnded = true;
+		// Win check for diagonals
+		} else if (this.board[0] === mark
+			&& this.board[4] === mark
+			&& this.board[8] === mark
+			||
+			this.board[2] === mark
+			&& this.board[4] === mark
+			&& this.board[6] === mark
+			) {
+				this.isEnded = true;
+		}
 	}
-	// Win check for diagonals
-	if (this.board[0] === this.turn
-		&& this.board[4] === this.turn
-		&& this.board[8] === this.turn
-		||
-		this.board[2] === this.turn
-		&& this.board[4] === this.turn
-		&& this.board[6] === this.turn
-		) {
-			console.log("Win");
+	console.log(this.turn);
+	console.log(mark);
+	// Tie check
+	if ( this.turn >= 8 ) {
+		this.isEnded = true;
+		this.isTie = true;
+	} else if (!this.isEnded){
+		this.turn += 1;
 	}
 	
-	this.turn = this.turn === 'x' ? 'o' : 'x';
 }
 
 export default {
 	name: "App",
 	components: {
 		MarkSlot,
-		TurnIndicator
+		TurnIndicator,
+		WinIndicator
 	},
 	methods: {
 		resetBoard,
@@ -71,8 +84,10 @@ export default {
 	},
 	data() {
 		return {
-			turn: 'x',
-			board: ['', '', '', '', '', '', '', '', '']
+			turn: 0,
+			board: [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+			isEnded: false,
+			isTie: false
 		}
 	}
 }

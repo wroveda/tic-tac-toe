@@ -1,17 +1,18 @@
 <template>
 	<button :style="{'background-color': bgColor}">
-		<fa-icon v-show="mark === 'x'" icon="fa-solid fa-x" />
-		<fa-icon v-show="mark === 'o'" icon="fa-regular fa-circle" />
+		<fa-icon v-show="mark === 0" icon="fa-solid fa-x" />
+		<fa-icon v-show="mark === 1" icon="fa-regular fa-circle" />
 	</button>
 </template>
 
 <script>
-function mark() {
+function turnNum() {
+	this.mark = this.turnNum % 2;
 	switch (this.mark) {
-		case 'x': 
+		case 0: 
 			this.bgColor = "var(--clr-acc-x)";
 			break;
-		case 'o': 
+		case 1: 
 			this.bgColor = "var(--clr-acc-o)";
 			break;
 		default: 
@@ -22,13 +23,14 @@ function mark() {
 export default {
 	name: "MarkSlot",
 	props: {
-		mark: String,
+		turnNum: Number,
 	},
 	watch: {
-		mark,
+		turnNum,
 	},
 	data() {
 		return {
+			mark: -1,
 			bgColor: "var(--clr-faded)"
 		}
 	}
