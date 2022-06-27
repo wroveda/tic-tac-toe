@@ -1,7 +1,7 @@
 <template>
 	<div class="turn-ind">
 		<div class="mark-x" :class="{active: turnNum % 2 === 0}"><fa-icon icon="fa-solid fa-x" /></div>
-		<div class="turn-ind__text">TURN</div>
+		<div class="text">TURN</div>
 		<div class="mark-o" :class="{active: turnNum % 2 === 1}"><fa-icon icon="fa-regular fa-circle" /></div>
 	</div>
 </template>
@@ -23,7 +23,7 @@ export default {
 	margin-bottom: 0.5em;
 }
 
-.turn-ind__text {
+.text {
 	margin: 0 1em;
 }
 

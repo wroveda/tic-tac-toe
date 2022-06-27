@@ -1,19 +1,12 @@
 <template>
 	<header>
-		<h1>TIC TAC TOE</h1>
+		<h1>TIC-TAC-TOE</h1>
 	</header>
 	<TurnIndicator v-show="!isEnded" :turnNum="turn"/>
 	<WinIndicator v-show="isEnded" :turnNum="turn" :isTie="isTie"/>
 	<div class="cont-slot">
-		<MarkSlot @click="onMarkSlotClick(0)" :turnNum="board[0]"/>
-		<MarkSlot @click="onMarkSlotClick(1)" :turnNum="board[1]"/>
-		<MarkSlot @click="onMarkSlotClick(2)" :turnNum="board[2]"/>
-		<MarkSlot @click="onMarkSlotClick(3)" :turnNum="board[3]"/>
-		<MarkSlot @click="onMarkSlotClick(4)" :turnNum="board[4]"/>
-		<MarkSlot @click="onMarkSlotClick(5)" :turnNum="board[5]"/>
-		<MarkSlot @click="onMarkSlotClick(6)" :turnNum="board[6]"/>
-		<MarkSlot @click="onMarkSlotClick(7)" :turnNum="board[7]"/>
-		<MarkSlot @click="onMarkSlotClick(8)" :turnNum="board[8]"/>
+		<!-- Slots are 0 indexed -->
+		<MarkSlot v-for="slotID in 9" :key="slotID - 1" @click="onMarkSlotClick(slotID - 1)" :turnNum="board[slotID - 1]"/>
 	</div>
 	<button id="btn-reset" @click="resetBoard">Reset</button>
 </template>
@@ -32,8 +25,11 @@ function resetBoard() {
 }
 
 function onMarkSlotClick(id) {
-	if (this.board[id] != '-1' || this.isEnded) { return }
+	// Check if the game has ended or the slot has already been filled.
+	if ( this.isEnded || this.board[id] != '-1') { return }
 	
+	// Converts the turn into the corresponding mark.
+	// x = 0 | o = 1
 	let mark = this.turn % 2;
 	this.board[id] = mark;
 	
@@ -47,28 +43,28 @@ function onMarkSlotClick(id) {
 			&& this.board[3 + i] === mark
 			&& this.board[6 + i] === mark) {
 				this.isEnded = true;
-		// Win check for diagonals
-		} else if (this.board[0] === mark
-			&& this.board[4] === mark
-			&& this.board[8] === mark
-			||
-			this.board[2] === mark
-			&& this.board[4] === mark
-			&& this.board[6] === mark
-			) {
-				this.isEnded = true;
 		}
 	}
-	console.log(this.turn);
-	console.log(mark);
+	// Win check for diagonals
+	if (this.board[0] === mark
+		&& this.board[4] === mark
+		&& this.board[8] === mark
+		||
+		this.board[2] === mark
+		&& this.board[4] === mark
+		&& this.board[6] === mark
+		) {
+			this.isEnded = true;
+	}
 	// Tie check
-	if ( this.turn >= 8 ) {
+	else if ( this.turn >= 8 ) {
 		this.isEnded = true;
 		this.isTie = true;
-	} else if (!this.isEnded){
+	}
+	// Continue to next turn
+	else if (!this.isEnded){
 		this.turn += 1;
 	}
-	
 }
 
 export default {
@@ -96,18 +92,20 @@ export default {
 
 <style>
 @font-face {
-	font-family: "Iosevka Aile";
-	src: "./assets/font/iosevka-aile-regular.ttf"
+	font-family: "Iosevka Aile Lite";
+	src: "./assets/font/iosevka-aile-lite-regular.ttf"
 }
 
 * {
-	font: "Iosevka Aile";
 	--clr-fg: #fecea8;
 	--clr-bg: #2a363b;
 	--clr-acc: #99b898;
 	--clr-acc-x: #4e92b5;
 	--clr-acc-o: #b54e4e;
 	--clr-faded: #5d6468;
+	font-family: "Iosevka Aile Lite", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -135,9 +133,6 @@ button {
 }
 
 #app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 	color: var(--clr-fg);
 	display: flex;
 	flex-direction: column;
@@ -147,6 +142,13 @@ button {
 	margin: 0 auto;
 	margin-top: 60px;
 	box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.cont-ind {
+	font-size: 1.5rem;
+	display: flex;
+	align-items: center;
+	margin-bottom: 0.5em;
 }
 
 .cont-slot {

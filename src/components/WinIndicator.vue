@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<div class="win-indicator" v-show="!isTie">
+		<div class="cont-ind" v-show="!isTie">
 			<div class="mark-x"><fa-icon v-show="turnNum % 2 === 0" icon="fa-solid fa-x" /></div>
 			<div class="mark-o"><fa-icon v-show="turnNum % 2 === 1" icon="fa-regular fa-circle" /></div>
-			<div class="text">WINS</div>
+			<div>WINS</div>
 		</div>
-		<div class="win-indicator" v-show="isTie">
-			<div class="text">TIE</div>
+		<div class="cont-ind" v-show="isTie">
+			<div class="tie">TIE</div>
 		</div>
 	</div>
 </template>
@@ -21,11 +21,9 @@ export default {
 </script>
 
 <style scoped>
-.win-indicator {
-	font-size: 1.5rem;
-	display: flex;
-	align-items: center;
-	margin-bottom: 0.5em;
+/* Maintains the alignment with the win indicator */
+.tie {
+	margin: 0.25em 0;
 }
 
 .mark-x {
