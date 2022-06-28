@@ -1,24 +1,29 @@
-# tictactoe
+# tic-tac-toe
 
-## Project setup
-```
-npm install
-```
+A simple game of tic-tac-toe
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Installation
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Requires ``npm`` to build it.
 
-### Lints and fixes files
-```
-npm run lint
-```
+1. Clone the repo
+	```
+	git clone https://github.com/wroveda/tic-tac-toe.git
+	```
+2. Install the dependencies
+	```
+	npm install
+	```
+3. Build the site
+	```
+	npm run serve
+	```
+4. Connect to the displayed url with your prefered browser
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Example
+
+Example of the project deployed here: [site](https://simple-tris.netlify.app/)
+
+## License
+
+Distributed under the MIT license. See ``LICENSE`` for more information.
